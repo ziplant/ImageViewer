@@ -51,7 +51,6 @@ export default {
           image.height = canvas.value.height;
           break;
       }
-      console.log(image.complete);
 
       if (image.complete) {
         ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
