@@ -30,8 +30,6 @@ export default {
     });
 
     const drawImage = src => {
-      ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
-
       const image = new Image();
       image.src = src;
 
@@ -53,8 +51,17 @@ export default {
           image.height = canvas.value.height;
           break;
       }
+      console.log(image.complete);
 
-      ctx.value.drawImage(image, 0, 0, image.width, image.height);
+      if (image.complete) {
+        ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+        ctx.value.drawImage(image, 0, 0, image.width, image.height);
+      } else {
+        image.onload = () => {
+          ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+          ctx.value.drawImage(image, 0, 0, image.width, image.height);
+        };
+      }
     };
 
     watch([src, selectedType], () => {
